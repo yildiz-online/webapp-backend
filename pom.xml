@@ -44,8 +44,6 @@
 
   <properties>
     <dependency.spring-boot.version>1.5.9.RELEASE</dependency.spring-boot.version>
-    <dependency.nodejs.version>v9.3.0</dependency.nodejs.version>
-    <dependency.yarn.version>v1.3.2</dependency.yarn.version>
   </properties>
 
 
@@ -127,39 +125,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>com.github.eirslett</groupId>
-        <artifactId>frontend-maven-plugin</artifactId>
-        <version>1.6</version>
-        <configuration>
-          <nodeVersion>${dependency.nodejs.version}</nodeVersion>
-          <yarnVersion>${dependency.yarn.version}</yarnVersion>
-          <workingDirectory>src/main/js</workingDirectory>
-          <installDirectory>target/node_install</installDirectory>
-        </configuration>
-        <executions>
-          <execution>
-            <id>Install nodejs and yarn...</id>
-            <goals><goal>install-node-and-yarn</goal></goals>
-          </execution>
-          <execution>
-            <id>Install dependencies...</id>
-            <phase>prepare-package</phase>
-            <goals><goal>yarn</goal></goals>
-            <configuration><arguments>install</arguments></configuration>
-          </execution>
-          <execution>
-            <id>Building angular application...</id>
-            <phase>prepare-package</phase>
-            <goals><goal>yarn</goal></goals>
-            <configuration><arguments>run build-prod</arguments></configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>pl.project13.maven</groupId>
-        <artifactId>git-commit-id-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
