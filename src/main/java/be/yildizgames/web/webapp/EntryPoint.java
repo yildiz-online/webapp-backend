@@ -23,24 +23,17 @@
 
 package be.yildizgames.web.webapp;
 
-import be.yildizgames.module.database.DataBaseConnectionProvider;
-import be.yildizgames.module.database.DatabaseConnectionProviderFactory;
-import be.yildizgames.module.database.DatabaseUpdater;
-import be.yildizgames.module.database.LiquibaseDatabaseUpdater;
-import be.yildizgames.module.database.SimpleDbProperties;
+import be.yildizgames.module.database.*;
 import be.yildizgames.module.database.derby.DerbySystem;
 import be.yildizgames.module.database.postgresql.PostgresqlSystem;
 import be.yildizgames.module.messaging.Broker;
 import be.yildizgames.module.messaging.SimpleBrokerProperties;
 import be.yildizgames.module.messaging.activemq.ActivemqBroker;
-import org.apache.catalina.connector.Connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -70,21 +63,6 @@ public class EntryPoint {
      */
     @Value("${port:9090}")
     private int port;
-
-    @Bean
-    public EmbeddedServletContainerFactory servletContainer() {
-
-        TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
-
-        Connector ajpConnector = new Connector("AJP/1.3");
-        ajpConnector.setPort(this.port);
-        ajpConnector.setSecure(false);
-        ajpConnector.setAllowTrace(false);
-        ajpConnector.setScheme("http");
-        tomcat.addAdditionalTomcatConnectors(ajpConnector);
-
-        return tomcat;
-    }
 
     @Bean
     public DataBaseConnectionProvider connectionProvider() throws Exception {
