@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -60,9 +60,9 @@ public class AccountConfirmationController {
         this.accountConfirmationService = accountConfirmationService;
     }
 
-    @RequestMapping("api/v1/accounts/confirmations")
+    @GetMapping("api/v1/accounts/confirmations")
     public DeferredResult<AjaxResponse> confirm(@RequestParam String login, @RequestParam String token) {
-        logger.debug("Confirm (api/v1/accounts/confirmations) " + login + ":" + token);
+        logger.debug("Confirm (api/v1/accounts/confirmations) {}:{}", login, token);
         DeferredResult<AjaxResponse> response = new DeferredResult<>(ACCOUNT_CONFIRMATION_TIMEOUT,
                 AjaxResponse.notification(ACCOUNT_CONFIRMATION_TIMEOUT_NOTIF));
 

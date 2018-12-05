@@ -31,7 +31,10 @@ import be.yildizgames.web.webapp.infrastructure.services.AccountCreationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 /**
@@ -57,9 +60,9 @@ public class AccountCreationController {
         this.accountCreationService = accountCreationService;
     }
 
-    @RequestMapping(value = "api/v1/accounts/creations", method = RequestMethod.POST)
+    @PostMapping(value = "api/v1/accounts/creations")
     public DeferredResult<AjaxResponse> create(@RequestBody AccountForm form) {
-        logger.debug("Create (api/v1/accounts/creations) " + form);
+        logger.debug("Create (api/v1/accounts/creations) {}", form);
 
         DeferredResult<AjaxResponse> response = new DeferredResult<>(ACCOUNT_CREATION_TIMEOUT,
                 AjaxResponse.notification(ACCOUNT_CREATION_TIMEOUT_NOTIF));

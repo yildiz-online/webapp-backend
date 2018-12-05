@@ -94,10 +94,6 @@ public class ExceptionsHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private ResponseEntity<AjaxResponse> build(AjaxResponse response, int status) {
-        return this.build(response, HttpStatus.valueOf(status));
-    }
-
     private ResponseEntity<AjaxResponse> build(AjaxResponse response, HttpStatus status) {
         return new ResponseEntity<>(response, status);
     }

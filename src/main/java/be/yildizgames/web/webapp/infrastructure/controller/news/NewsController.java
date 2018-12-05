@@ -28,8 +28,8 @@ import be.yildizgames.web.webapp.domain.news.InvalidNewsException;
 import be.yildizgames.web.webapp.domain.news.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -48,12 +48,12 @@ public class NewsController {
         this.newsProvider = newsProvider;
     }
 
-    @RequestMapping("/api/v1/news")
+    @GetMapping("/api/v1/news")
     public List<News> find() throws InvalidNewsException{
         return this.newsProvider.findLatest("en", 10);
     }
 
-    @RequestMapping("/api/v1/news/{language}")
+    @GetMapping("/api/v1/news/{language}")
     public List<News> find(@PathVariable final String language) throws InvalidNewsException{
         return this.newsProvider.findLatest(language, 10);
     }

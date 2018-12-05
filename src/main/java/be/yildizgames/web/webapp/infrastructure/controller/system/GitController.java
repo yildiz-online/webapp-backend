@@ -16,7 +16,6 @@ package be.yildizgames.web.webapp.infrastructure.controller.system;
 
 import be.yildizgames.common.git.GitProperties;
 import be.yildizgames.common.git.GitPropertiesProvider;
-import be.yildizgames.common.git.exception.GitPropertiesException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

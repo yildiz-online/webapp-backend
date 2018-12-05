@@ -93,7 +93,7 @@ public class EntryPoint {
             p.load(fis);
             PostgresqlSystem.support();
         } catch (FileNotFoundException e) {
-            LOGGER.error("Cannot load the database configuration file (" + this.databaseConfigFile + "), fallback to temporary internal DB");
+            LOGGER.error("Cannot load the database configuration file ({}), fallback to temporary internal DB",  this.databaseConfigFile);
             p.setProperty("database.user", "sa");
             p.setProperty("database.password", "");
             p.setProperty("database.root.user", "sa");
@@ -118,7 +118,7 @@ public class EntryPoint {
             p.load(fis);
             return ActivemqBroker.initialize(new SimpleBrokerProperties(p));
         } catch (FileNotFoundException e) {
-            LOGGER.error("Cannot load the broker configuration file (" + this.brokerConfigFile + "), fallback to temporary internal broker");
+            LOGGER.error("Cannot load the broker configuration file ({}), fallback to temporary internal broker", this.brokerConfigFile);
             return ActivemqBroker.initializeInternal("Fallback-internal-broker", Paths.get("temp"), "localhost", 7896);
         }
 
