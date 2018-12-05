@@ -41,6 +41,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -58,20 +59,14 @@ public class EntryPoint {
     @Value("${brokerconfig:/yildiz/broker.properties}")
     private String brokerConfigFile;
 
-    /**
-     * AJP port.
-     */
-    @Value("${port:9090}")
-    private int port;
-
     @Bean
-    public DataBaseConnectionProvider connectionProvider() throws Exception {
+    public DataBaseConnectionProvider connectionProvider() throws IOException, SQLException {
         Properties p = new Properties();
         try (FileInputStream fis = new FileInputStream(this.databaseConfigFile)){
             p.load(fis);
             PostgresqlSystem.support();
         } catch (FileNotFoundException e) {
-            LOGGER.error("Cannot load the database configuration file ({}), fallback to temporary internal DB",  this.databaseConfigFile);
+            LOGGER.error("Cannot load the database configuration file {}, fallback to temporary internal DB",  this.databaseConfigFile);
             p.setProperty("database.user", "sa");
             p.setProperty("database.password", "");
             p.setProperty("database.root.user", "sa");
@@ -96,7 +91,7 @@ public class EntryPoint {
             p.load(fis);
             return ActivemqBroker.initialize(new SimpleBrokerProperties(p));
         } catch (FileNotFoundException e) {
-            LOGGER.error("Cannot load the broker configuration file ({}), fallback to temporary internal broker", this.brokerConfigFile);
+            LOGGER.error("Cannot load the broker configuration file (}, fallback to temporary internal broker", this.brokerConfigFile);
             return ActivemqBroker.initializeInternal("Fallback-internal-broker", Paths.get("temp"), "localhost", 7896);
         }
 

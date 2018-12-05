@@ -68,7 +68,6 @@ public class NewsPersistence extends AbstractPersistence<News> implements NewsPr
                 .append("NATURAL JOIN NEWS N NATURAL JOIN AUTHOR ORDER BY N.DATE DESC")
                 .limit(10)
                 .build();
-        //String sql = "SELECT * FROM " + this.tableByLanguage.get(language) + "  DESC LIMIT " + newsNumber;
         return listFromSQL(sql);
     }
 

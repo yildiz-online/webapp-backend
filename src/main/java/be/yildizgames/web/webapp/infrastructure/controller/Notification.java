@@ -23,6 +23,8 @@
 
 package be.yildizgames.web.webapp.infrastructure.controller;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
+
 /**
  * @author Grégory Van den Borre
  */
@@ -36,6 +38,10 @@ public class Notification {
 
 
     Notification(String title, String content, String type) {
+        super();
+        ImplementationException.throwForNull(title);
+        ImplementationException.throwForNull(content);
+        ImplementationException.throwForNull(type);
         this.title = title;
         this.content = content;
         this.type = type;
