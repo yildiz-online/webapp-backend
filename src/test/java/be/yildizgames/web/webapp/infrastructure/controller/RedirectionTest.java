@@ -20,33 +20,39 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  */
-
 package be.yildizgames.web.webapp.infrastructure.controller;
 
 import be.yildizgames.common.exception.implementation.ImplementationException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
-/**
- * @author Grégory Van den Borre
- */
-public class Redirection {
+class RedirectionTest {
 
-    private final String target;
+    private static final String TARGET_OK = "targetOk";
 
-    private final String url;
+    private static final String URL_OK = "urlOk";
 
-    public Redirection(String target, String url) {
-        super();
-        ImplementationException.throwForNull(target);
-        ImplementationException.throwForNull(url);
-        this.target = target;
-        this.url = url;
+    @Nested
+    class Constructor {
+
+        @Test
+        void happyFlow() {
+            Redirection redirection = new Redirection(TARGET_OK, URL_OK);
+            Assertions.assertEquals(TARGET_OK, redirection.getTarget());
+            Assertions.assertEquals(URL_OK, redirection.getUrl());
+        }
+
+        @Test
+        void nullTarget() {
+            Assertions.assertThrows(ImplementationException.class, () -> new Redirection(null, URL_OK));
+        }
+
+        @Test
+        void nullUrl() {
+            Assertions.assertThrows(ImplementationException.class, () -> new Redirection(TARGET_OK, null));
+        }
+
     }
 
-    public String getTarget() {
-        return target;
-    }
-
-    public String getUrl() {
-        return url;
-    }
 }
