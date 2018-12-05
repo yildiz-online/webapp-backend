@@ -91,7 +91,7 @@ public class EntryPoint {
             p.load(fis);
             return ActivemqBroker.initialize(new SimpleBrokerProperties(p));
         } catch (FileNotFoundException e) {
-            LOGGER.error("Cannot load the broker configuration file (}, fallback to temporary internal broker", this.brokerConfigFile);
+            LOGGER.error("Cannot load the broker configuration file {}, fallback to temporary internal broker", this.brokerConfigFile);
             return ActivemqBroker.initializeInternal("Fallback-internal-broker", Paths.get("temp"), "localhost", 7896);
         }
 

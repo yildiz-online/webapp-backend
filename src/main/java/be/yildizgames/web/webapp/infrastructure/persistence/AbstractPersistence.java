@@ -71,10 +71,9 @@ abstract class AbstractPersistence <T> {
     }
 
     final List<T> listFromSQL(String sql) {
-        try {
-            Connection c = this.provider.getConnection();
+        try (Connection c = this.provider.getConnection();
             PreparedStatement stmt = c.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery()) {
                 List<T> result = new ArrayList<>();
                 while(rs.next()) {
                     result.add(this.fromRS(rs));
