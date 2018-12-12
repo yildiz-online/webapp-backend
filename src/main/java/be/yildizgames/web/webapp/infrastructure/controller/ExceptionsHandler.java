@@ -25,9 +25,9 @@ package be.yildizgames.web.webapp.infrastructure.controller;
 
 import be.yildizgames.common.authentication.TemporaryAccountValidationException;
 import be.yildizgames.common.exception.technical.TechnicalException;
+import be.yildizgames.common.logging.LogFactory;
 import be.yildizgames.web.webapp.infrastructure.controller.account.creation.TemporaryAccountCreationValidationException;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class ExceptionsHandler {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LogFactory.getInstance().getLogger(this.getClass());
 
     private static final String ACCOUNT_VALIDATION_ERROR = "account.validation.error";
 

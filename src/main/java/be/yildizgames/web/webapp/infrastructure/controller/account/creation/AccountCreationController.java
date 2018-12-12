@@ -25,11 +25,11 @@
 package be.yildizgames.web.webapp.infrastructure.controller.account.creation;
 
 import be.yildizgames.common.authentication.TemporaryAccount;
+import be.yildizgames.common.logging.LogFactory;
 import be.yildizgames.web.webapp.infrastructure.controller.AjaxResponse;
 import be.yildizgames.web.webapp.infrastructure.controller.Notification;
 import be.yildizgames.web.webapp.infrastructure.services.AccountCreationService;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +44,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 @RestController
 public class AccountCreationController {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LogFactory.getInstance().getLogger(this.getClass());
 
     public static final long ACCOUNT_CREATION_TIMEOUT = 5000L;
 
