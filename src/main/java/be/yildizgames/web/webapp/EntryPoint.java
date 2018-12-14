@@ -23,7 +23,6 @@
 
 package be.yildizgames.web.webapp;
 
-import be.yildizgames.common.logging.LogFactory;
 import be.yildizgames.module.database.*;
 import be.yildizgames.module.database.derby.DerbySystem;
 import be.yildizgames.module.database.postgresql.PostgresqlSystem;
@@ -31,6 +30,7 @@ import be.yildizgames.module.messaging.Broker;
 import be.yildizgames.module.messaging.SimpleBrokerProperties;
 import be.yildizgames.module.messaging.activemq.ActivemqBroker;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -51,7 +51,7 @@ import java.util.Properties;
 @ComponentScan("be.yildizgames.web.webapp.infrastructure.*")
 public class EntryPoint {
 
-    private static final Logger LOGGER = LogFactory.getInstance().getLogger(EntryPoint.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EntryPoint.class);
 
     @Value("${dbconfig:/yildiz/db.properties}")
     private String databaseConfigFile;

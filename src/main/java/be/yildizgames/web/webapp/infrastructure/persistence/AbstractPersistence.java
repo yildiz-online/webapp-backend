@@ -23,10 +23,10 @@
 
 package be.yildizgames.web.webapp.infrastructure.persistence;
 
-import be.yildizgames.common.logging.LogFactory;
 import be.yildizgames.module.database.DataBaseConnectionProvider;
 import be.yildizgames.module.database.QueryBuilder;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +41,7 @@ import java.util.Optional;
  */
 abstract class AbstractPersistence <T> {
 
-    private static final Logger LOGGER = LogFactory.getInstance().getLogger(AbstractPersistence.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPersistence.class);
 
     private final DataBaseConnectionProvider provider;
 
