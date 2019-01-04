@@ -26,9 +26,11 @@ package be.yildizgames.web.webapp;
 
 import be.yildizgames.module.messaging.Broker;
 import be.yildizgames.module.messaging.BrokerMessageDestination;
+import be.yildizgames.module.messaging.BrokerProvider;
 import be.yildizgames.module.messaging.Message;
 import be.yildizgames.module.messaging.MessageConsumer;
-import be.yildizgames.module.messaging.activemq.ActivemqBroker;
+import be.yildizgames.module.messaging.StandardBrokerProperties;
+import be.yildizgames.module.messaging.activemq.ActivemqBrokerProvider;
 import be.yildizgames.web.webapp.infrastructure.controller.AjaxResponse;
 import be.yildizgames.web.webapp.infrastructure.controller.account.creation.AccountCreationController;
 import be.yildizgames.web.webapp.infrastructure.controller.account.creation.AccountForm;
@@ -43,6 +45,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Properties;
 
 /**
  * Integration tests to create an account.
@@ -88,8 +91,23 @@ class AccountCreationIT {
     }
 
     private static Broker givenABroker() throws IOException {
+        BrokerProvider provider = new ActivemqBrokerProvider();
+        return provider.initialize(StandardBrokerProperties.fromProperties(manualProperties()));
+    }
+
+    /**
+     * @deprecated have a StandardBrokerProperties.manual(args) to do this
+     * @return The properties
+     */
+    @Deprecated(since = "2.0.0", forRemoval = true)
+    private static Properties manualProperties() throws IOException {
         Path temp = Files.createTempDirectory("tempTest" + System.nanoTime());
-        return ActivemqBroker.initializeInternal("test", temp, "localhost", 61613);
+        Properties p = new Properties();
+        p.setProperty("broker.host", "localhost");
+        p.setProperty("broker.port", "61613");
+        p.setProperty("broker.data", temp.toString());
+        p.setProperty("broker.internal", "true");
+        return p;
     }
 
     private static JmsAccountCreation givenAnAccountService(Broker broker) {

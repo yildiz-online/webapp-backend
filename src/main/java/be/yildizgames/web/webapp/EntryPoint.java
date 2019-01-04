@@ -23,12 +23,17 @@
 
 package be.yildizgames.web.webapp;
 
-import be.yildizgames.module.database.*;
+import be.yildizgames.module.database.DataBaseConnectionProvider;
+import be.yildizgames.module.database.DatabaseConnectionProviderFactory;
+import be.yildizgames.module.database.DatabaseUpdater;
+import be.yildizgames.module.database.LiquibaseDatabaseUpdater;
+import be.yildizgames.module.database.SimpleDbProperties;
 import be.yildizgames.module.database.derby.DerbySystem;
 import be.yildizgames.module.database.postgresql.PostgresqlSystem;
 import be.yildizgames.module.messaging.Broker;
-import be.yildizgames.module.messaging.SimpleBrokerProperties;
-import be.yildizgames.module.messaging.activemq.ActivemqBroker;
+import be.yildizgames.module.messaging.BrokerProvider;
+import be.yildizgames.module.messaging.StandardBrokerProperties;
+import be.yildizgames.module.messaging.activemq.ActivemqBrokerProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +45,6 @@ import org.springframework.context.annotation.ComponentScan;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -86,15 +90,29 @@ public class EntryPoint {
 
     @Bean
     public Broker broker() throws IOException {
+        BrokerProvider provider = new ActivemqBrokerProvider();
         Properties p = new Properties();
         try(FileInputStream fis = new FileInputStream(this.brokerConfigFile)) {
             p.load(fis);
-            return ActivemqBroker.initialize(new SimpleBrokerProperties(p));
         } catch (FileNotFoundException e) {
             LOGGER.error("Cannot load the broker configuration file {}, fallback to temporary internal broker", this.brokerConfigFile);
-            return ActivemqBroker.initializeInternal("Fallback-internal-broker", Paths.get("temp"), "localhost", 7896);
+            p = manualProperties();
         }
+        return provider.initialize(StandardBrokerProperties.fromProperties(p));
+    }
 
+    /**
+     * @deprecated have a StandardBrokerProperties.manual(args) to do this
+     * @return The properties
+     */
+    @Deprecated(since = "2.0.0", forRemoval = true)
+    private Properties manualProperties() {
+        Properties p = new Properties();
+        p.setProperty("broker.host", "localhost");
+        p.setProperty("broker.port", "7896");
+        p.setProperty("broker.data", "temp");
+        p.setProperty("broker.internal", "true");
+        return p;
     }
 
     public static void main(String[] args) {
