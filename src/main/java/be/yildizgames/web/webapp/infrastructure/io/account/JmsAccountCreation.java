@@ -56,6 +56,7 @@ public class JmsAccountCreation implements AccountCreationService {
     @Autowired
     public JmsAccountCreation(Broker broker) {
         super();
+        //TODO have name in common authentication
         BrokerMessageDestination responseQueue = broker.registerQueue("authentication-creation-temporary");
         responseQueue.createConsumer(message -> {
             String correlationId = message.getCorrelationId();
@@ -67,6 +68,7 @@ public class JmsAccountCreation implements AccountCreationService {
                 callback.ifPresent(CallBack::error);
             }
         });
+        //TODO have name in common authentication
         BrokerMessageDestination requestQueue = broker.registerQueue("create-account-request");
         this.producer = requestQueue.createProducer();
     }

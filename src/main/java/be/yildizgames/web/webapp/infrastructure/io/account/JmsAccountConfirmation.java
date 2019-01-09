@@ -50,11 +50,13 @@ public class JmsAccountConfirmation implements AccountConfirmationService {
     @Autowired
     public JmsAccountConfirmation(Broker broker) {
         super();
+        //TODO have name in common authentication
         BrokerMessageDestination responseQueue = broker.registerQueue("create-account-confirmation-response");
         responseQueue.createConsumer(message -> {
             String correlationId = message.getCorrelationId();
             Optional.ofNullable(results.get(correlationId)).ifPresent(r -> r.setResult(message.getText()));
         });
+        //TODO have name in common authentication
         BrokerMessageDestination requestQueue = broker.registerQueue("create-account-confirmation-request");
         this.producer = requestQueue.createProducer();
     }

@@ -28,12 +28,13 @@ import be.yildizgames.module.database.DatabaseConnectionProviderFactory;
 import be.yildizgames.module.database.DatabaseUpdater;
 import be.yildizgames.module.database.LiquibaseDatabaseUpdater;
 import be.yildizgames.module.database.SimpleDbProperties;
-import be.yildizgames.module.database.derby.DerbySystem;
 import be.yildizgames.module.database.postgresql.PostgresqlSystem;
 import be.yildizgames.module.messaging.Broker;
 import be.yildizgames.module.messaging.BrokerProvider;
 import be.yildizgames.module.messaging.StandardBrokerProperties;
 import be.yildizgames.module.messaging.activemq.ActivemqBrokerProvider;
+import be.yildizgames.web.webapp.infrastructure.io.BrokerFallback;
+import be.yildizgames.web.webapp.infrastructure.persistence.DatabaseFallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,16 +71,8 @@ public class EntryPoint {
             p.load(fis);
             PostgresqlSystem.support();
         } catch (FileNotFoundException e) {
-            LOGGER.error("Cannot load the database configuration file {}, fallback to temporary internal DB",  this.databaseConfigFile);
-            p.setProperty("database.user", "sa");
-            p.setProperty("database.password", "");
-            p.setProperty("database.root.user", "sa");
-            p.setProperty("database.root.password", "");
-            p.setProperty("database.host", "localhost");
-            p.setProperty("database.port", "1527");
-            p.setProperty("database.system", "derby-file");
-            p.setProperty("database.name", "webapp");
-            DerbySystem.support();
+            DatabaseFallback databaseFallback = DatabaseFallback.prepare(p);
+            databaseFallback.activate("webapp");
         }
         DataBaseConnectionProvider provider =  DatabaseConnectionProviderFactory.getInstance()
                 .create(new SimpleDbProperties(p));
@@ -91,28 +84,14 @@ public class EntryPoint {
     @Bean
     public Broker broker() throws IOException {
         BrokerProvider provider = new ActivemqBrokerProvider();
-        Properties p = new Properties();
+        final Properties p = new Properties();
         try(FileInputStream fis = new FileInputStream(this.brokerConfigFile)) {
             p.load(fis);
         } catch (FileNotFoundException e) {
-            LOGGER.error("Cannot load the broker configuration file {}, fallback to temporary internal broker", this.brokerConfigFile);
-            p = manualProperties();
+            BrokerFallback fallback = BrokerFallback.prepare(p);
+            fallback.activate();
         }
         return provider.initialize(StandardBrokerProperties.fromProperties(p));
-    }
-
-    /**
-     * @deprecated have a StandardBrokerProperties.manual(args) to do this
-     * @return The properties
-     */
-    @Deprecated(since = "2.0.0", forRemoval = true)
-    private Properties manualProperties() {
-        Properties p = new Properties();
-        p.setProperty("broker.host", "localhost");
-        p.setProperty("broker.port", "7896");
-        p.setProperty("broker.data", "temp");
-        p.setProperty("broker.internal", "true");
-        return p;
     }
 
     public static void main(String[] args) {
