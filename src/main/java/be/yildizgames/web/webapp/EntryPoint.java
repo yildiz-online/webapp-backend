@@ -25,6 +25,7 @@ package be.yildizgames.web.webapp;
 
 import be.yildizgames.common.logging.LogEngine;
 import be.yildizgames.common.logging.LogEngineFactory;
+import be.yildizgames.common.logging.LoggerConfiguration;
 import be.yildizgames.common.logging.LoggerPropertiesConfiguration;
 import be.yildizgames.module.database.DataBaseConnectionProvider;
 import be.yildizgames.module.database.DatabaseConnectionProviderFactory;
@@ -95,7 +96,9 @@ public class EntryPoint {
         Properties p = new Properties();
         try (FileInputStream fis = new FileInputStream(args[0])){
             p.load(fis);
-            engine.configureFromProperties(LoggerPropertiesConfiguration.fromProperties(p));
+            LoggerConfiguration configuration = LoggerPropertiesConfiguration.fromProperties(p);
+            engine.configureFromProperties(configuration);
+            System.setProperty("logging.config", configuration.getLoggerConfigurationFile());
         }
         SpringApplication.run(EntryPoint.class, args);
     }
