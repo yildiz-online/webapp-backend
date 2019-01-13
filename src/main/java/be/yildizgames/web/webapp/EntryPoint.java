@@ -61,17 +61,6 @@ public class EntryPoint {
     private String configFile;
 
     @Bean
-    public LogEngine logEngine() throws IOException {
-        LogEngine engine = LogEngineFactory.getLogEngine();
-        Properties p = new Properties();
-        try (FileInputStream fis = new FileInputStream(this.configFile)){
-            p.load(fis);
-            engine.configureFromProperties(LoggerPropertiesConfiguration.fromProperties(p));
-        }
-        return engine;
-    }
-
-    @Bean
     public DataBaseConnectionProvider connectionProvider() throws IOException, SQLException {
         Properties p = new Properties();
         try (FileInputStream fis = new FileInputStream(this.configFile)){
@@ -101,7 +90,13 @@ public class EntryPoint {
         return provider.initialize(StandardBrokerProperties.fromProperties(p));
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        LogEngine engine = LogEngineFactory.getLogEngine();
+        Properties p = new Properties();
+        try (FileInputStream fis = new FileInputStream(args[0])){
+            p.load(fis);
+            engine.configureFromProperties(LoggerPropertiesConfiguration.fromProperties(p));
+        }
         SpringApplication.run(EntryPoint.class, args);
     }
 }
