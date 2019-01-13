@@ -98,7 +98,6 @@ public class EntryPoint {
             p.load(fis);
             LoggerConfiguration configuration = LoggerPropertiesConfiguration.fromProperties(p);
             engine.configureFromProperties(configuration);
-            System.setProperty("logging.config", configuration.getLoggerConfigurationFile());
         }
         SpringApplication.run(EntryPoint.class, args);
     }
