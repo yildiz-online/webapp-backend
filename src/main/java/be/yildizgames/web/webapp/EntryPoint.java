@@ -23,6 +23,9 @@
 
 package be.yildizgames.web.webapp;
 
+import be.yildizgames.common.logging.LogEngine;
+import be.yildizgames.common.logging.LogEngineFactory;
+import be.yildizgames.common.logging.LoggerPropertiesConfiguration;
 import be.yildizgames.module.database.DataBaseConnectionProvider;
 import be.yildizgames.module.database.DatabaseConnectionProviderFactory;
 import be.yildizgames.module.database.DatabaseUpdater;
@@ -35,8 +38,6 @@ import be.yildizgames.module.messaging.StandardBrokerProperties;
 import be.yildizgames.module.messaging.activemq.ActivemqBrokerProvider;
 import be.yildizgames.web.webapp.infrastructure.io.BrokerFallback;
 import be.yildizgames.web.webapp.infrastructure.persistence.DatabaseFallback;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -56,10 +57,19 @@ import java.util.Properties;
 @ComponentScan("be.yildizgames.web.webapp.infrastructure.*")
 public class EntryPoint {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EntryPoint.class);
-
     @Value("${config:/config/config.properties}")
     private String configFile;
+
+    @Bean
+    public LogEngine logEngine() throws IOException {
+        LogEngine engine = LogEngineFactory.getLogEngine();
+        Properties p = new Properties();
+        try (FileInputStream fis = new FileInputStream(this.configFile)){
+            p.load(fis);
+            engine.configureFromProperties(LoggerPropertiesConfiguration.fromProperties(p));
+        }
+        return engine;
+    }
 
     @Bean
     public DataBaseConnectionProvider connectionProvider() throws IOException, SQLException {
