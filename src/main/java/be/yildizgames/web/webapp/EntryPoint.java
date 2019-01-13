@@ -58,16 +58,13 @@ public class EntryPoint {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EntryPoint.class);
 
-    @Value("${dbconfig:/yildiz/db.properties}")
-    private String databaseConfigFile;
-
-    @Value("${brokerconfig:/yildiz/broker.properties}")
-    private String brokerConfigFile;
+    @Value("${config:/config/config.properties}")
+    private String configFile;
 
     @Bean
     public DataBaseConnectionProvider connectionProvider() throws IOException, SQLException {
         Properties p = new Properties();
-        try (FileInputStream fis = new FileInputStream(this.databaseConfigFile)){
+        try (FileInputStream fis = new FileInputStream(this.configFile)){
             p.load(fis);
             PostgresqlSystem.support();
         } catch (FileNotFoundException e) {
@@ -85,7 +82,7 @@ public class EntryPoint {
     public Broker broker() throws IOException {
         BrokerProvider provider = new ActivemqBrokerProvider();
         final Properties p = new Properties();
-        try(FileInputStream fis = new FileInputStream(this.brokerConfigFile)) {
+        try(FileInputStream fis = new FileInputStream(this.configFile)) {
             p.load(fis);
         } catch (FileNotFoundException e) {
             BrokerFallback fallback = BrokerFallback.prepare(p);
