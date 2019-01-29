@@ -25,6 +25,7 @@
 package be.yildizgames.web.webapp.infrastructure.io.account;
 
 import be.yildizgames.common.authentication.TemporaryAccount;
+import be.yildizgames.common.authentication.protocol.Queues;
 import be.yildizgames.common.authentication.protocol.TemporaryAccountCreationResultDto;
 import be.yildizgames.common.authentication.protocol.mapper.TemporaryAccountMapper;
 import be.yildizgames.common.authentication.protocol.mapper.TemporaryAccountResultMapper;
@@ -56,8 +57,7 @@ public class JmsAccountCreation implements AccountCreationService {
     @Autowired
     public JmsAccountCreation(Broker broker) {
         super();
-        //TODO have name in common authentication
-        BrokerMessageDestination responseQueue = broker.registerQueue("authentication-creation-temporary");
+        BrokerMessageDestination responseQueue = broker.registerQueue(Queues.ACCOUNT_CREATION_TEMP.getName());
         responseQueue.createConsumer(message -> {
             String correlationId = message.getCorrelationId();
             Optional<CallBack<TemporaryAccountCreationResultDto>> callback = Optional.ofNullable(results.get(correlationId));
@@ -68,8 +68,7 @@ public class JmsAccountCreation implements AccountCreationService {
                 callback.ifPresent(CallBack::error);
             }
         });
-        //TODO have name in common authentication
-        BrokerMessageDestination requestQueue = broker.registerQueue("create-account-request");
+        BrokerMessageDestination requestQueue = broker.registerQueue(Queues.CREATE_ACCOUNT_REQUEST.getName());
         this.producer = requestQueue.createProducer();
     }
 

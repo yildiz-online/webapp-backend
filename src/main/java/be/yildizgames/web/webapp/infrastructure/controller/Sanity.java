@@ -24,6 +24,7 @@
 package be.yildizgames.web.webapp.infrastructure.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Sanity {
 
-    @RequestMapping(value = "api/v1/sanity")
+    @GetMapping(value = "api/v1/sanity")
     public String create() {
         return "ok";
     }

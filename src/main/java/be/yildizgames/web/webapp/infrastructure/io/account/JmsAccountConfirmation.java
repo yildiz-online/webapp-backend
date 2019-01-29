@@ -25,6 +25,7 @@
 package be.yildizgames.web.webapp.infrastructure.io.account;
 
 import be.yildizgames.common.authentication.protocol.AccountConfirmationDto;
+import be.yildizgames.common.authentication.protocol.Queues;
 import be.yildizgames.common.authentication.protocol.mapper.AccountConfirmationMapper;
 import be.yildizgames.module.messaging.Broker;
 import be.yildizgames.module.messaging.BrokerMessageDestination;
@@ -50,14 +51,12 @@ public class JmsAccountConfirmation implements AccountConfirmationService {
     @Autowired
     public JmsAccountConfirmation(Broker broker) {
         super();
-        //TODO have name in common authentication
-        BrokerMessageDestination responseQueue = broker.registerQueue("create-account-confirmation-response");
+        BrokerMessageDestination responseQueue = broker.registerQueue(Queues.CREATE_ACCOUNT_CONFIRMATION_RESPONSE.getName());
         responseQueue.createConsumer(message -> {
             String correlationId = message.getCorrelationId();
             Optional.ofNullable(results.get(correlationId)).ifPresent(r -> r.setResult(message.getText()));
         });
-        //TODO have name in common authentication
-        BrokerMessageDestination requestQueue = broker.registerQueue("create-account-confirmation-request");
+        BrokerMessageDestination requestQueue = broker.registerQueue(Queues.CREATE_ACCOUNT_CONFIRMATION_REQUEST.getName());
         this.producer = requestQueue.createProducer();
     }
 
