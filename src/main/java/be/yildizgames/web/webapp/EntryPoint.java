@@ -24,7 +24,7 @@
 package be.yildizgames.web.webapp;
 
 import be.yildizgames.common.logging.LogEngine;
-import be.yildizgames.common.logging.LogEngineFactory;
+import be.yildizgames.common.logging.LogEngineProvider;
 import be.yildizgames.common.logging.LoggerConfiguration;
 import be.yildizgames.common.logging.LoggerPropertiesConfiguration;
 import be.yildizgames.module.database.DataBaseConnectionProvider;
@@ -92,7 +92,7 @@ public class EntryPoint {
     }
 
     public static void main(String[] args) throws IOException {
-        LogEngine engine = LogEngineFactory.getLogEngine();
+        LogEngine engine = LogEngineProvider.getLoggerProvider().getLogEngine();
         Properties p = new Properties();
         try (FileInputStream fis = new FileInputStream(args[0])){
             p.load(fis);
