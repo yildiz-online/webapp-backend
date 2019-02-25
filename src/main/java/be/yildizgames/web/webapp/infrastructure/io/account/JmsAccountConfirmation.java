@@ -29,8 +29,8 @@ import be.yildizgames.common.authentication.protocol.Queues;
 import be.yildizgames.common.authentication.protocol.mapper.AccountConfirmationMapper;
 import be.yildizgames.module.messaging.Broker;
 import be.yildizgames.module.messaging.BrokerMessageDestination;
-import be.yildizgames.module.messaging.Header;
-import be.yildizgames.module.messaging.JmsMessageProducer;
+import be.yildizgames.module.messaging.BrokerMessageHeader;
+import be.yildizgames.module.messaging.BrokerMessageProducer;
 import be.yildizgames.web.webapp.infrastructure.services.AccountConfirmationService;
 import be.yildizgames.web.webapp.infrastructure.services.CallBack;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class JmsAccountConfirmation implements AccountConfirmationService {
 
     private final Map<String, CallBack<String>> results = new HashMap<>();
 
-    private final JmsMessageProducer producer;
+    private final BrokerMessageProducer producer;
 
     @Autowired
     public JmsAccountConfirmation(Broker broker) {
@@ -64,6 +64,6 @@ public class JmsAccountConfirmation implements AccountConfirmationService {
     public void confirm(AccountConfirmationDto dto, CallBack<String> response) {
         String cId = UUID.randomUUID().toString();
         this.results.put(cId, response);
-        producer.sendMessage(AccountConfirmationMapper.getInstance().to(dto), Header.correlationId(cId));
+        producer.sendMessage(AccountConfirmationMapper.getInstance().to(dto), BrokerMessageHeader.correlationId(cId));
     }
 }

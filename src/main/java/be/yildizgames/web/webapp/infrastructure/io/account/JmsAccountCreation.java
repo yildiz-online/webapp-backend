@@ -32,8 +32,8 @@ import be.yildizgames.common.authentication.protocol.mapper.TemporaryAccountResu
 import be.yildizgames.common.exception.business.BusinessException;
 import be.yildizgames.module.messaging.Broker;
 import be.yildizgames.module.messaging.BrokerMessageDestination;
-import be.yildizgames.module.messaging.Header;
-import be.yildizgames.module.messaging.JmsMessageProducer;
+import be.yildizgames.module.messaging.BrokerMessageHeader;
+import be.yildizgames.module.messaging.BrokerMessageProducer;
 import be.yildizgames.web.webapp.infrastructure.services.AccountCreationService;
 import be.yildizgames.web.webapp.infrastructure.services.CallBack;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class JmsAccountCreation implements AccountCreationService {
 
     private final Map <String, CallBack<TemporaryAccountCreationResultDto>> results = new HashMap<>();
 
-    private final JmsMessageProducer producer;
+    private final BrokerMessageProducer producer;
 
     @Autowired
     public JmsAccountCreation(Broker broker) {
@@ -76,6 +76,6 @@ public class JmsAccountCreation implements AccountCreationService {
     public void send(TemporaryAccount ta, CallBack<TemporaryAccountCreationResultDto> response) {
         String cId = UUID.randomUUID().toString();
         this.results.put(cId, response);
-        producer.sendMessage(TemporaryAccountMapper.getInstance().to(ta), Header.correlationId(cId));
+        producer.sendMessage(TemporaryAccountMapper.getInstance().to(ta), BrokerMessageHeader.correlationId(cId));
     }
 }

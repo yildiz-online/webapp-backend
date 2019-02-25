@@ -34,8 +34,8 @@ import be.yildizgames.module.database.LiquibaseDatabaseUpdater;
 import be.yildizgames.module.database.SimpleDbProperties;
 import be.yildizgames.module.database.postgresql.PostgresqlSystem;
 import be.yildizgames.module.messaging.Broker;
+import be.yildizgames.module.messaging.BrokerPropertiesStandard;
 import be.yildizgames.module.messaging.BrokerProvider;
-import be.yildizgames.module.messaging.StandardBrokerProperties;
 import be.yildizgames.module.messaging.activemq.ActivemqBrokerProvider;
 import be.yildizgames.web.webapp.infrastructure.io.BrokerFallback;
 import be.yildizgames.web.webapp.infrastructure.persistence.DatabaseFallback;
@@ -88,7 +88,7 @@ public class EntryPoint {
             BrokerFallback fallback = BrokerFallback.prepare(p);
             fallback.activate();
         }
-        return provider.initialize(StandardBrokerProperties.fromProperties(p));
+        return provider.initialize(BrokerPropertiesStandard.fromProperties(p));
     }
 
     public static void main(String[] args) throws IOException {

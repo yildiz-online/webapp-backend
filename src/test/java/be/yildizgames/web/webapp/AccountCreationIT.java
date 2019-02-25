@@ -25,11 +25,11 @@
 package be.yildizgames.web.webapp;
 
 import be.yildizgames.module.messaging.Broker;
+import be.yildizgames.module.messaging.BrokerMessage;
+import be.yildizgames.module.messaging.BrokerMessageConsumer;
 import be.yildizgames.module.messaging.BrokerMessageDestination;
+import be.yildizgames.module.messaging.BrokerPropertiesStandard;
 import be.yildizgames.module.messaging.BrokerProvider;
-import be.yildizgames.module.messaging.Message;
-import be.yildizgames.module.messaging.MessageConsumer;
-import be.yildizgames.module.messaging.StandardBrokerProperties;
 import be.yildizgames.module.messaging.activemq.ActivemqBrokerProvider;
 import be.yildizgames.web.webapp.infrastructure.controller.AjaxResponse;
 import be.yildizgames.web.webapp.infrastructure.controller.account.creation.AccountCreationController;
@@ -79,9 +79,9 @@ class AccountCreationIT {
             AccountCreationController controller = givenAnAccountController(givenAnAccountService(broker));
             DeferredResult<AjaxResponse> result = controller.create(givenACorrectAccountForm());
             BrokerMessageDestination destination = broker.registerQueue("create-account-request");
-            MessageConsumer consumer = destination.createConsumer(m -> {});
+            BrokerMessageConsumer consumer = destination.createConsumer(m -> {});
             waitForConsumer(consumer);
-            Message message = consumer.getMessageReceived().get(0);
+            BrokerMessage message = consumer.getMessageReceived().get(0);
             Assertions.assertEquals("myName@@myPassword@@me@me.com", message.getText());
         }
     }
@@ -92,7 +92,7 @@ class AccountCreationIT {
 
     private static Broker givenABroker() throws IOException {
         BrokerProvider provider = new ActivemqBrokerProvider();
-        return provider.initialize(StandardBrokerProperties.fromProperties(manualProperties()));
+        return provider.initialize(BrokerPropertiesStandard.fromProperties(manualProperties()));
     }
 
     /**
@@ -135,7 +135,7 @@ class AccountCreationIT {
      * @param consumer Consumer to wait for.
      * @throws InterruptedException For thread sleep.
      */
-    private static void waitForConsumer(MessageConsumer consumer) throws InterruptedException{
+    private static void waitForConsumer(BrokerMessageConsumer consumer) throws InterruptedException{
         int wait = 0;
         while (!consumer.hasMessage()) {
             if(wait > 20) {
