@@ -70,9 +70,9 @@ public class ExceptionsHandler {
     @ExceptionHandler(TemporaryAccountValidationException.class)
     @ResponseBody
     public ResponseEntity<AjaxResponse> handleValidationException(final TemporaryAccountValidationException e) {
-        return this.build(AjaxResponse.notification(e.getErrors()
+        return this.build(AjaxResponse.notification(e.getExceptions()
                         .stream()
-                        .map(msg -> Notification.error(ACCOUNT_VALIDATION_ERROR, msg))
+                        .map(msg -> Notification.error(ACCOUNT_VALIDATION_ERROR, msg.messageKey))
                         .collect(Collectors.toList())),
                 HttpStatus.UNPROCESSABLE_ENTITY);
     }
