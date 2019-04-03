@@ -27,7 +27,7 @@ public class GitController {
 
     @Autowired
     public GitController() {
-        this.gitProperties = GitPropertiesProvider.getGitPropertiesSafe();
+        this.gitProperties = GitPropertiesProvider.getGitProperties();
     }
 
     @GetMapping("api/v1/status/git")
