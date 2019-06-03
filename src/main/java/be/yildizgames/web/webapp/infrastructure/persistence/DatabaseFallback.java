@@ -28,8 +28,6 @@ package be.yildizgames.web.webapp.infrastructure.persistence;
 
 import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.module.database.derby.DerbySystem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
@@ -39,7 +37,7 @@ import java.util.Properties;
 @Deprecated
 public class DatabaseFallback {
 
-    private final Logger logger = LoggerFactory.getLogger(DatabaseFallback.class);
+    private final System.Logger logger = System.getLogger(DatabaseFallback.class.getName());
 
     private final Properties properties;
 
@@ -58,7 +56,7 @@ public class DatabaseFallback {
     }
 
     public final void activate(String databaseName) {
-        this.logger.error("Cannot load the database configuration file, fallback to temporary internal DB");
+        this.logger.log(System.Logger.Level.ERROR,"Cannot load the database configuration file, fallback to temporary internal DB");
         this.properties.setProperty("database.user", "sa");
         this.properties.setProperty("database.password", "");
         this.properties.setProperty("database.root.user", "sa");

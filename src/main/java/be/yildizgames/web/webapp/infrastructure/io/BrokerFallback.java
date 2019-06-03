@@ -27,15 +27,13 @@
 package be.yildizgames.web.webapp.infrastructure.io;
 
 import be.yildizgames.common.exception.implementation.ImplementationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
 @Deprecated
 public class BrokerFallback {
 
-    private final Logger logger = LoggerFactory.getLogger(BrokerFallback.class);
+    private final System.Logger logger = System.getLogger(BrokerFallback.class.getName());
 
     private final Properties properties;
 
@@ -54,7 +52,7 @@ public class BrokerFallback {
     }
 
     public final void activate() {
-        this.logger.error("Cannot load the broker configuration file, fallback to temporary internal broker");
+        this.logger.log(System.Logger.Level.ERROR, "Cannot load the broker configuration file, fallback to temporary internal broker");
         this.properties.setProperty("broker.host", "localhost");
         this.properties.setProperty("broker.port", "7896");
         this.properties.setProperty("broker.data", "temp");

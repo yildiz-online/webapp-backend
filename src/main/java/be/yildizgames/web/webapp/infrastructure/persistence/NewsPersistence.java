@@ -29,8 +29,6 @@ import be.yildizgames.web.webapp.application.news.NewsProvider;
 import be.yildizgames.web.webapp.domain.news.Author;
 import be.yildizgames.web.webapp.domain.news.InvalidNewsException;
 import be.yildizgames.web.webapp.domain.news.News;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -49,7 +47,7 @@ import java.util.Map;
 @Repository
 public class NewsPersistence extends AbstractPersistence<News> implements NewsProvider {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NewsPersistence.class);
+    private static final System.Logger LOGGER = System.getLogger(NewsPersistence.class.getName());
 
     private Map<String, String> tableByLanguage = new HashMap<>();
 
@@ -83,7 +81,7 @@ public class NewsPersistence extends AbstractPersistence<News> implements NewsPr
                     new Author(rs.getString("name")),
                     rs.getTimestamp("date").getTime());
         } catch (InvalidNewsException e) {
-            LOGGER.error("Invalid News", e);
+            LOGGER.log(System.Logger.Level.ERROR, "Invalid News", e);
             return null;
         }
     }

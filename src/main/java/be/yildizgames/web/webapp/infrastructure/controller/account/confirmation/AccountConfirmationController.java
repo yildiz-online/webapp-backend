@@ -28,8 +28,6 @@ import be.yildizgames.common.authentication.protocol.AccountConfirmationDto;
 import be.yildizgames.web.webapp.infrastructure.controller.AjaxResponse;
 import be.yildizgames.web.webapp.infrastructure.controller.Notification;
 import be.yildizgames.web.webapp.infrastructure.services.AccountConfirmationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +42,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 @RestController
 public class AccountConfirmationController {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final System.Logger logger = System.getLogger(this.getClass().getName());
 
     public static final long ACCOUNT_CONFIRMATION_TIMEOUT = 5000L;
 
@@ -62,7 +60,7 @@ public class AccountConfirmationController {
 
     @GetMapping("api/v1/accounts/confirmations")
     public DeferredResult<AjaxResponse> confirm(@RequestParam String login, @RequestParam String token) {
-        logger.debug("Confirm (api/v1/accounts/confirmations) {}:{}", login, token);
+        logger.log(System.Logger.Level.DEBUG,"Confirm (api/v1/accounts/confirmations) {}:{}", login, token);
         DeferredResult<AjaxResponse> response = new DeferredResult<>(ACCOUNT_CONFIRMATION_TIMEOUT,
                 AjaxResponse.notification(ACCOUNT_CONFIRMATION_TIMEOUT_NOTIF));
 

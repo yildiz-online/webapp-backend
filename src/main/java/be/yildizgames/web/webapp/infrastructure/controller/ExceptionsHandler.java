@@ -26,8 +26,6 @@ package be.yildizgames.web.webapp.infrastructure.controller;
 import be.yildizgames.common.authentication.TemporaryAccountValidationException;
 import be.yildizgames.common.exception.technical.TechnicalException;
 import be.yildizgames.web.webapp.infrastructure.controller.account.creation.TemporaryAccountCreationValidationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -42,7 +40,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class ExceptionsHandler {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final System.Logger logger = System.getLogger(this.getClass().getName());
 
     private static final String ACCOUNT_VALIDATION_ERROR = "account.validation.error";
 
@@ -88,7 +86,7 @@ public class ExceptionsHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseEntity<AjaxResponse> handleUnhandledException(final Exception e) {
-        this.logger.error("Unhandled controller exception:", e);
+        this.logger.log(System.Logger.Level.ERROR,"Unhandled controller exception:", e);
         return this.build(AjaxResponse.notification(
                 Notification.error(TECHNICAL_ERROR, "technical.error.content")),
                 HttpStatus.INTERNAL_SERVER_ERROR);

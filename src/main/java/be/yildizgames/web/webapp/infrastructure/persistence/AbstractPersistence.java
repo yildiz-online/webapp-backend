@@ -25,8 +25,6 @@ package be.yildizgames.web.webapp.infrastructure.persistence;
 
 import be.yildizgames.module.database.DataBaseConnectionProvider;
 import be.yildizgames.module.database.QueryBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +39,7 @@ import java.util.Optional;
  */
 abstract class AbstractPersistence <T> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPersistence.class);
+    private static final System.Logger LOGGER = System.getLogger(AbstractPersistence.class.getName());
 
     private final DataBaseConnectionProvider provider;
 
@@ -60,7 +58,7 @@ abstract class AbstractPersistence <T> {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            LOGGER.error("Persistence error", e);
+            LOGGER.log(System.Logger.Level.ERROR,"Persistence error", e);
             throw new PersistenceException(e);
         }
     }
@@ -80,7 +78,7 @@ abstract class AbstractPersistence <T> {
                 }
                 return result;
         } catch (SQLException e) {
-            LOGGER.error("Persistence error" ,e);
+            LOGGER.log(System.Logger.Level.ERROR,"Persistence error" ,e);
             throw new PersistenceException(e);
         }
     }
