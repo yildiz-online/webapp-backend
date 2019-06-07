@@ -23,7 +23,6 @@
 
 package be.yildizgames.web.webapp.infrastructure.controller;
 
-import be.yildizgames.common.exception.technical.TechnicalException;
 import be.yildizgames.web.webapp.infrastructure.controller.account.creation.AccountCreationExceptionFactory;
 import be.yildizgames.web.webapp.infrastructure.controller.account.creation.TemporaryAccountCreationValidationException;
 import org.junit.jupiter.api.Nested;
@@ -106,7 +105,7 @@ class ExceptionHandlerTest {
         }
     }
 
-    private static final class TestException extends TechnicalException {
+    private static final class TestException extends IllegalStateException {
 
         TestException(String message, Exception cause) {
             super(message, cause);

@@ -29,7 +29,6 @@ import be.yildizgames.common.authentication.protocol.Queues;
 import be.yildizgames.common.authentication.protocol.TemporaryAccountCreationResultDto;
 import be.yildizgames.common.authentication.protocol.mapper.TemporaryAccountMapper;
 import be.yildizgames.common.authentication.protocol.mapper.TemporaryAccountResultMapper;
-import be.yildizgames.common.exception.business.BusinessException;
 import be.yildizgames.module.messaging.Broker;
 import be.yildizgames.module.messaging.BrokerMessageDestination;
 import be.yildizgames.module.messaging.BrokerMessageHeader;
@@ -64,7 +63,7 @@ public class JmsAccountCreation implements AccountCreationService {
             try {
                 TemporaryAccountCreationResultDto dto = TemporaryAccountResultMapper.getInstance().from(message.getText());
                 callback.ifPresent(r -> r.setResult(dto));
-            } catch (BusinessException e) {
+            } catch (IllegalArgumentException e) {
                 callback.ifPresent(CallBack::error);
             }
         });

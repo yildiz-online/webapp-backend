@@ -24,12 +24,10 @@
 
 package be.yildizgames.web.webapp.infrastructure.controller.account.creation;
 
-import be.yildizgames.common.exception.technical.TechnicalException;
-
 /**
  * @author Grégory Van den Borre
  */
-class TemporaryAccountCreationTechnicalException extends TechnicalException {
+class TemporaryAccountCreationTechnicalException extends IllegalStateException {
 
     TemporaryAccountCreationTechnicalException(String message, Exception cause) {
         super(message, cause);

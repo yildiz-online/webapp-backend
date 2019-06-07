@@ -22,7 +22,6 @@
  */
 package be.yildizgames.web.webapp.infrastructure.controller;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -45,12 +44,12 @@ class RedirectionTest {
 
         @Test
         void nullTarget() {
-            Assertions.assertThrows(ImplementationException.class, () -> new Redirection(null, URL_OK));
+            Assertions.assertThrows(NullPointerException.class, () -> new Redirection(null, URL_OK));
         }
 
         @Test
         void nullUrl() {
-            Assertions.assertThrows(ImplementationException.class, () -> new Redirection(TARGET_OK, null));
+            Assertions.assertThrows(NullPointerException.class, () -> new Redirection(TARGET_OK, null));
         }
 
     }

@@ -24,7 +24,6 @@
 package be.yildizgames.web.webapp.infrastructure.controller;
 
 import be.yildizgames.common.authentication.TemporaryAccountValidationException;
-import be.yildizgames.common.exception.technical.TechnicalException;
 import be.yildizgames.web.webapp.infrastructure.controller.account.creation.TemporaryAccountCreationValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,11 +74,11 @@ public class ExceptionsHandler {
                 HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @ExceptionHandler(TechnicalException.class)
+    @ExceptionHandler(IllegalStateException.class)
     @ResponseBody
-    public ResponseEntity<AjaxResponse> handleTechnicalException(final TechnicalException e) {
+    public ResponseEntity<AjaxResponse> handleTechnicalException(final IllegalStateException e) {
         return this.build(AjaxResponse.notification(
-                Notification.error(TECHNICAL_ERROR, e.message)),
+                Notification.error(TECHNICAL_ERROR, e.getMessage())),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

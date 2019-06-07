@@ -26,8 +26,7 @@
 
 package be.yildizgames.web.webapp.infrastructure.io;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
-
+import java.util.Objects;
 import java.util.Properties;
 
 @Deprecated
@@ -39,7 +38,7 @@ public class BrokerFallback {
 
     private BrokerFallback(Properties properties) {
         super();
-        ImplementationException.throwForNull(properties);
+        Objects.requireNonNull(properties);
         this.properties = properties;
     }
 

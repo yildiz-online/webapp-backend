@@ -23,15 +23,15 @@
 
 package be.yildizgames.web.webapp;
 
+import be.yildizgames.common.configuration.LoggerPropertiesConfiguration;
 import be.yildizgames.common.logging.LogEngine;
 import be.yildizgames.common.logging.LogEngineProvider;
 import be.yildizgames.common.logging.LoggerConfiguration;
-import be.yildizgames.common.logging.LoggerPropertiesConfiguration;
 import be.yildizgames.module.database.DataBaseConnectionProvider;
 import be.yildizgames.module.database.DatabaseConnectionProviderFactory;
 import be.yildizgames.module.database.DatabaseUpdater;
+import be.yildizgames.module.database.DbPropertiesStandard;
 import be.yildizgames.module.database.LiquibaseDatabaseUpdater;
-import be.yildizgames.module.database.SimpleDbProperties;
 import be.yildizgames.module.database.postgresql.PostgresqlSystem;
 import be.yildizgames.module.messaging.Broker;
 import be.yildizgames.module.messaging.BrokerPropertiesStandard;
@@ -72,7 +72,7 @@ public class EntryPoint {
             databaseFallback.activate("webapp");
         }
         DataBaseConnectionProvider provider =  DatabaseConnectionProviderFactory.getInstance()
-                .create(new SimpleDbProperties(p));
+                .create(DbPropertiesStandard.fromProperties(p));
         DatabaseUpdater databaseUpdater = LiquibaseDatabaseUpdater.fromConfigurationPath("web-database-update.xml");
         databaseUpdater.update(provider);
         return provider;

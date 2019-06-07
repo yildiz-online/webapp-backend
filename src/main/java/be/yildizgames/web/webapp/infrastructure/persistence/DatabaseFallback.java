@@ -26,9 +26,9 @@
 
 package be.yildizgames.web.webapp.infrastructure.persistence;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.module.database.derby.DerbySystem;
 
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -43,7 +43,7 @@ public class DatabaseFallback {
 
     private DatabaseFallback(Properties properties) {
         super();
-        ImplementationException.throwForNull(properties);
+        Objects.requireNonNull(properties);
         this.properties = properties;
     }
 

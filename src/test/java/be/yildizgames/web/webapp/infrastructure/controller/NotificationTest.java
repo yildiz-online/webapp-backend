@@ -22,7 +22,6 @@
  */
 package be.yildizgames.web.webapp.infrastructure.controller;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -46,17 +45,17 @@ class NotificationTest {
 
         @Test
         void nullTitle() {
-            Assertions.assertThrows(ImplementationException.class, () -> new Notification(null, CONTENT_OK, "smtg"));
+            Assertions.assertThrows(NullPointerException.class, () -> new Notification(null, CONTENT_OK, "smtg"));
         }
 
         @Test
         void nullContent() {
-            Assertions.assertThrows(ImplementationException.class, () -> new Notification(TITLE_OK, null, "smtg"));
+            Assertions.assertThrows(NullPointerException.class, () -> new Notification(TITLE_OK, null, "smtg"));
         }
 
         @Test
         void nullType() {
-            Assertions.assertThrows(ImplementationException.class, () -> new Notification(TITLE_OK, CONTENT_OK, null));
+            Assertions.assertThrows(NullPointerException.class, () -> new Notification(TITLE_OK, CONTENT_OK, null));
         }
 
     }
@@ -74,12 +73,12 @@ class NotificationTest {
 
         @Test
         void nullTitle() {
-            Assertions.assertThrows(ImplementationException.class, () -> Notification.success(null, CONTENT_OK));
+            Assertions.assertThrows(NullPointerException.class, () -> Notification.success(null, CONTENT_OK));
         }
 
         @Test
         void nullContent() {
-            Assertions.assertThrows(ImplementationException.class, () -> Notification.success(TITLE_OK, null));
+            Assertions.assertThrows(NullPointerException.class, () -> Notification.success(TITLE_OK, null));
         }
 
     }
@@ -97,12 +96,12 @@ class NotificationTest {
 
         @Test
         void nullTitle() {
-            Assertions.assertThrows(ImplementationException.class, () -> Notification.warning(null, CONTENT_OK));
+            Assertions.assertThrows(NullPointerException.class, () -> Notification.warning(null, CONTENT_OK));
         }
 
         @Test
         void nullContent() {
-            Assertions.assertThrows(ImplementationException.class, () -> Notification.warning(TITLE_OK, null));
+            Assertions.assertThrows(NullPointerException.class, () -> Notification.warning(TITLE_OK, null));
         }
 
     }
@@ -120,12 +119,12 @@ class NotificationTest {
 
         @Test
         void nullTitle() {
-            Assertions.assertThrows(ImplementationException.class, () -> Notification.error(null, CONTENT_OK));
+            Assertions.assertThrows(NullPointerException.class, () -> Notification.error(null, CONTENT_OK));
         }
 
         @Test
         void nullContent() {
-            Assertions.assertThrows(ImplementationException.class, () -> Notification.error(TITLE_OK, null));
+            Assertions.assertThrows(NullPointerException.class, () -> Notification.error(TITLE_OK, null));
         }
 
     }

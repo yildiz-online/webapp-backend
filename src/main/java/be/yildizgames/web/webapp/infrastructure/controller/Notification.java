@@ -23,7 +23,7 @@
 
 package be.yildizgames.web.webapp.infrastructure.controller;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
+import java.util.Objects;
 
 /**
  * @author Grégory Van den Borre
@@ -39,9 +39,9 @@ public class Notification {
 
     Notification(String title, String content, String type) {
         super();
-        ImplementationException.throwForNull(title);
-        ImplementationException.throwForNull(content);
-        ImplementationException.throwForNull(type);
+        Objects.requireNonNull(title);
+        Objects.requireNonNull(content);
+        Objects.requireNonNull(type);
         this.title = title;
         this.content = content;
         this.type = type;

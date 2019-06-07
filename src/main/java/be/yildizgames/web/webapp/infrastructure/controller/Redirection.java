@@ -23,7 +23,7 @@
 
 package be.yildizgames.web.webapp.infrastructure.controller;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
+import java.util.Objects;
 
 /**
  * @author Grégory Van den Borre
@@ -36,8 +36,8 @@ public class Redirection {
 
     public Redirection(String target, String url) {
         super();
-        ImplementationException.throwForNull(target);
-        ImplementationException.throwForNull(url);
+        Objects.requireNonNull(target);
+        Objects.requireNonNull(url);
         this.target = target;
         this.url = url;
     }
