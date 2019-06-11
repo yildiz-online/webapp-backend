@@ -60,7 +60,7 @@ public class AccountCreationController {
 
     @PostMapping(value = "api/v1/accounts/creations")
     public DeferredResult<AjaxResponse> create(@RequestBody AccountForm form) {
-        logger.log(System.Logger.Level.DEBUG,"Create (api/v1/accounts/creations) {}", form);
+        logger.log(System.Logger.Level.DEBUG,"Create (api/v1/accounts/creations) %s", form);
 
         DeferredResult<AjaxResponse> response = new DeferredResult<>(ACCOUNT_CREATION_TIMEOUT,
                 AjaxResponse.notification(ACCOUNT_CREATION_TIMEOUT_NOTIF));
