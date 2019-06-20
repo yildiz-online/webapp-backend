@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class AjaxResponse {
 
-    private final List<Redirection> redirections = new ArrayList<>();
+    private final List<Redirection> redirects = new ArrayList<>();
 
     private final List<Notification> notifications;
 
@@ -54,8 +54,8 @@ public class AjaxResponse {
         return new AjaxResponse(notifications);
     }
 
-    public List<Redirection> getRedirections() {
-        return redirections;
+    public List<Redirection> getRedirects() {
+        return redirects;
     }
 
     public List<Notification> getNotifications() {

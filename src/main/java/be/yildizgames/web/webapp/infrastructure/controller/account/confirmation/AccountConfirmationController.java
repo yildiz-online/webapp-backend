@@ -46,7 +46,7 @@ public class AccountConfirmationController {
 
     public static final long ACCOUNT_CONFIRMATION_TIMEOUT = 5000L;
 
-    private static final Notification ACCOUNT_CONFIRMATION_TIMEOUT_NOTIF = Notification.warning(
+    private static final Notification ACCOUNT_CONFIRMATION_TIMEOUT_NOTIFICATION = Notification.warning(
             "account.confirmation.timeout.title",
             "account.confirmation.timeout.content");
 
@@ -60,9 +60,9 @@ public class AccountConfirmationController {
 
     @GetMapping("api/v1/accounts/confirmations")
     public DeferredResult<AjaxResponse> confirm(@RequestParam String login, @RequestParam String token) {
-        logger.log(System.Logger.Level.DEBUG,"Confirm (api/v1/accounts/confirmations) {}:{}", login, token);
+        logger.log(System.Logger.Level.DEBUG,"Confirm (api/v1/accounts/confirmations) %s:%s", login, token);
         DeferredResult<AjaxResponse> response = new DeferredResult<>(ACCOUNT_CONFIRMATION_TIMEOUT,
-                AjaxResponse.notification(ACCOUNT_CONFIRMATION_TIMEOUT_NOTIF));
+                AjaxResponse.notification(ACCOUNT_CONFIRMATION_TIMEOUT_NOTIFICATION));
 
         this.accountConfirmationService.confirm(new AccountConfirmationDto(login, token),
                 TemporaryAccountConfirmationResultResponse.prepare(response));

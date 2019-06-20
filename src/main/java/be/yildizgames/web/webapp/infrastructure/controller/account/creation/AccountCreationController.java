@@ -46,7 +46,7 @@ public class AccountCreationController {
 
     public static final long ACCOUNT_CREATION_TIMEOUT = 5000L;
 
-    private static final Notification ACCOUNT_CREATION_TIMEOUT_NOTIF = Notification.warning(
+    private static final Notification ACCOUNT_CREATION_TIMEOUT_NOTIFICATON = Notification.warning(
             "account.creation.timeout.title",
             "account.creation.timeout.content");
 
@@ -63,7 +63,7 @@ public class AccountCreationController {
         logger.log(System.Logger.Level.DEBUG,"Create (api/v1/accounts/creations) %s", form);
 
         DeferredResult<AjaxResponse> response = new DeferredResult<>(ACCOUNT_CREATION_TIMEOUT,
-                AjaxResponse.notification(ACCOUNT_CREATION_TIMEOUT_NOTIF));
+                AjaxResponse.notification(ACCOUNT_CREATION_TIMEOUT_NOTIFICATON));
 
         this.accountCreationService.send(
                 this.getTemporaryAccountFromForm(form), TemporaryAccountCreationResultResponse.prepare(response));

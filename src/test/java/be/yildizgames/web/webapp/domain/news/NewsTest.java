@@ -78,9 +78,7 @@ class NewsTest {
         @Test
         void withContentTooLong() {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i <= News.CONTENT_MAX; i++) {
-                sb.append('a');
-            }
+            sb.append("a".repeat(News.CONTENT_MAX + 1));
 
             assertThrows(InvalidNewsException.class, () -> new News(NEWSID_OK, TITLE_OK, sb.toString(), TAGID_OK, IMAGE_OK, AUTHOR_OK));
         }
