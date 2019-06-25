@@ -23,10 +23,10 @@
 
 package be.yildizgames.web.webapp;
 
-import be.yildizgames.common.configuration.LoggerPropertiesConfiguration;
 import be.yildizgames.common.logging.LogEngine;
 import be.yildizgames.common.logging.LogEngineProvider;
 import be.yildizgames.common.logging.LoggerConfiguration;
+import be.yildizgames.common.logging.LoggerPropertiesConfiguration;
 import be.yildizgames.module.database.DataBaseConnectionProvider;
 import be.yildizgames.module.database.DatabaseConnectionProviderFactory;
 import be.yildizgames.module.database.DatabaseUpdater;
