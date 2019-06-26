@@ -24,7 +24,7 @@
 package be.yildizgames.web.webapp.infrastructure.io;
 
 
-import be.yildizgames.common.configuration.PropertiesHelper;
+import be.yildizgames.common.properties.PropertiesHelper;
 
 import java.util.Properties;
 

@@ -38,6 +38,7 @@ import be.yildizgames.web.webapp.infrastructure.io.account.JmsAccountConfirmatio
 import be.yildizgames.web.webapp.infrastructure.io.account.JmsAccountCreation;
 import be.yildizgames.web.webapp.infrastructure.services.AccountCreationService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -73,6 +74,7 @@ class AccountCreationIT {
     @Nested
     class NoAuthenticationServer {
 
+        @Disabled
         @Test
         void test() throws IOException, InterruptedException {
             Broker broker = givenABroker();
