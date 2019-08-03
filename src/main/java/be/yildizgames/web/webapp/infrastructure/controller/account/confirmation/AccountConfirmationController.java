@@ -60,7 +60,7 @@ public class AccountConfirmationController {
 
     @GetMapping("api/v1/accounts/confirmations")
     public DeferredResult<AjaxResponse> confirm(@RequestParam String login, @RequestParam String token) {
-        logger.log(System.Logger.Level.DEBUG,"Confirm (api/v1/accounts/confirmations) %s:%s", login, token);
+        logger.log(System.Logger.Level.DEBUG,"Confirm (api/v1/accounts/confirmations) {0}:{1}", login, token);
         DeferredResult<AjaxResponse> response = new DeferredResult<>(ACCOUNT_CONFIRMATION_TIMEOUT,
                 AjaxResponse.notification(ACCOUNT_CONFIRMATION_TIMEOUT_NOTIFICATION));
 
