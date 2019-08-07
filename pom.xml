@@ -43,7 +43,7 @@
   <packaging>jar</packaging>
 
   <properties>
-    <dependency.spring-boot.version>2.1.6.RELEASE</dependency.spring-boot.version>
+    <dependency.spring-boot.version>2.1.7.RELEASE</dependency.spring-boot.version>
   </properties>
 
 
