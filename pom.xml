@@ -184,7 +184,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>2.3.1.RELEASE</version>
+        <version>${dependency.spring-boot.version}</version>
         <executions>
           <execution>
             <phase>package</phase>
