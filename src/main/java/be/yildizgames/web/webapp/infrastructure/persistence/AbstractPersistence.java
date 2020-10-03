@@ -83,8 +83,8 @@ abstract class AbstractPersistence <T> {
         }
     }
 
-    protected QueryBuilder getBuilder() {
-        return this.provider.getBuilder();
+    protected QueryBuilder getBuilder(String table) {
+        return this.provider.getBuilder(table);
     }
 
     protected abstract T fromRS(ResultSet rs) throws SQLException;

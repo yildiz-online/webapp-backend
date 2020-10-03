@@ -60,7 +60,7 @@ public class NewsPersistence extends AbstractPersistence<News> implements NewsPr
 
     @Override
     public List<News> findLatest(String language, int newsNumber) {
-        QueryBuilder builder = this.getBuilder();
+        QueryBuilder builder = this.getBuilder(this.tableByLanguage.get(language));
         String sql = builder
                 .selectAllFrom(this.tableByLanguage.get(language))
                 .append("NATURAL JOIN NEWS N NATURAL JOIN AUTHOR ORDER BY N.DATE DESC")
