@@ -44,7 +44,7 @@
 
   <properties>
     <java.version>11</java.version>
-    <dependency.spring-boot.version>2.3.4.RELEASE</dependency.spring-boot.version>
+    <dependency.spring-boot.version>2.3.5.RELEASE</dependency.spring-boot.version>
     <jackson.version>2.11.3</jackson.version>
   </properties>
 
